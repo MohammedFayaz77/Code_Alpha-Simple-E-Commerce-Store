@@ -1,0 +1,23 @@
+step1 :- open power shell 
+cd "c:\Users\fayaz\OneDrive\Documents\Fayaz Project Intern\server"
+
+$env:PATH = "C:\Program Files\nodejs;" + [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+npm.cmd run dev
+
+step2 :- new power shell
+ cd "c:\Users\fayaz\OneDrive\Documents\Fayaz Project Intern\client"
+
+$env:PATH = "C:\Program Files\nodejs;" + [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+npm.cmd run dev
+
+
+
+Role	                  Email Address	                Password	
+Admin	                admin@fayazstore.com	        Admin@123	
+Customer	        customer@fayazstore.com	        Customer@123
+
+
+step3 :-
+to close 
+ctrl +c 
+Y

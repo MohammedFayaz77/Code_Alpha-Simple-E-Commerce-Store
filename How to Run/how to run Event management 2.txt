@@ -1,0 +1,22 @@
+Event management 2
+step 1 :- in power shell
+ cd "c:\Users\fayaz\OneDrive\Documents\Fayaz Project Intern\server"
+
+$env:PATH = "C:\Program Files\nodejs;" + [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+npm.cmd run dev
+
+step2 :- in new power shell
+ cd "c:\Users\fayaz\OneDrive\Documents\Fayaz Project Intern\client"
+
+$env:PATH = "C:\Program Files\nodejs;" + [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+npm.cmd run dev
+
+step3 :-
+Fayaz (Lead Director) — fayaz@eventflow.io / Fayaz@123 (Full Owner & Admin access)
+🎬 Sarah (Stage & AV Lead) — sarah.chen@eventflow.io / Password@123
+🚚 Alex (Logistics Lead) — alex.morgan@eventflow.io / Password@123
+🥂 Priya (VIP Hospitality) — priya.sharma@eventflow.io / Password@123
+
+step4 :- to close 
+ctrl+c 
+Y

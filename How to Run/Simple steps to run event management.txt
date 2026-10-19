@@ -1,0 +1,66 @@
+================================================================================
+FAYAZ EVENT MANAGEMENT — SIMPLE STEPS TO RUN (WINDOWS)
+CodeAlpha Full Stack Development Internship — Task 3: Project Management Tool
+================================================================================
+
+STEP 1: START THE BACKEND SERVER (Port 5000)
+---------------------------------------------
+1. Open PowerShell and run:
+   cd "c:\Users\fayaz\OneDrive\Documents\Fayaz Project Intern\server"
+
+2. Ensure Node.js is in PATH and start server:
+   $env:PATH = "C:\Program Files\nodejs;" + [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+   npm.cmd run dev
+
+   You should see:
+   ✅ Connected to database successfully.
+   ⚡ Socket.io real-time engine initialized.
+   🚀 Fayaz Event Management Backend running on http://localhost:5000
+
+
+STEP 2: START THE FRONTEND CLIENT (Port 5173)
+----------------------------------------------
+1. Open a SECOND PowerShell window and run:
+   cd "c:\Users\fayaz\OneDrive\Documents\Fayaz Project Intern\client"
+
+2. Start the Vite development server:
+   $env:PATH = "C:\Program Files\nodejs;" + [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+   npm.cmd run dev
+
+3. Open your browser and navigate to:
+   http://localhost:5173
+
+
+STEP 3: 1-CLICK DEMO LOGIN ACCOUNTS
+------------------------------------
+You can click any demo account directly on the Login page or use these credentials:
+
+1. Fayaz Ahmed (Lead Event Director - Admin / Owner):
+   Email:    fayaz@eventflow.io
+   Password: Fayaz@123
+
+2. Sarah Chen (Stage & AV Creative Director):
+   Email:    sarah.chen@eventflow.io
+   Password: Password@123
+
+3. Alex Morgan (Logistics & Venue Operations):
+   Email:    alex.morgan@eventflow.io
+   Password: Password@123
+
+4. Priya Sharma (VIP Hospitality & Sponsor Lead):
+   Email:    priya.sharma@eventflow.io
+   Password: Password@123
+
+
+STEP 4: RUN AUTOMATED INTEGRATION TESTS
+----------------------------------------
+In the server directory PowerShell:
+   npm.cmd test
+(Runs 19 automated integration tests covering auth, projects, kanban, checklists, and comments)
+
+
+STEP 5: TO STOP SERVERS SAFELY
+-------------------------------
+In each PowerShell window, press:
+   Ctrl + C   and then type   y   and press Enter.
+================================================================================

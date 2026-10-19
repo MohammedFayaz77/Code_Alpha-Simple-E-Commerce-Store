@@ -1,0 +1,128 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            Int             @id @default(autoincrement())
+  email         String          @unique
+  password      String
+  name          String
+  roleTitle     String?         @default("Event Coordinator")
+  avatar        String?
+  bio           String?
+  systemRole    String          @default("USER") // "ADMIN" or "USER"
+  ownedProjects Project[]       @relation("ProjectOwner")
+  memberships   ProjectMember[]
+  assignedTasks Task[]          @relation("AssignedTasks")
+  createdTasks  Task[]          @relation("CreatedTasks")
+  comments      Comment[]
+  activities    Activity[]
+  notifications Notification[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+}
+
+model Project {
+  id          Int             @id @default(autoincrement())
+  title       String
+  slug        String          @unique
+  description String?
+  category    String          @default("Corporate Event") // "Conference", "Corporate Gala", "Tech Expo", "Music Festival", "Product Launch", "Wedding", "Operations"
+  status      String          @default("ACTIVE") // "PLANNING", "ACTIVE", "COMPLETED", "ARCHIVED"
+  eventDate   DateTime?
+  venue       String?
+  budget      Float?          @default(0)
+  color       String?         @default("#6366f1")
+  ownerId     Int
+  owner       User            @relation("ProjectOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  members     ProjectMember[]
+  tasks       Task[]
+  activities  Activity[]
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+}
+
+model ProjectMember {
+  id        Int      @id @default(autoincrement())
+  projectId Int
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role      String   @default("MEMBER") // "OWNER", "ADMIN", "MEMBER", "VIEWER"
+  joinedAt  DateTime @default(now())
+
+  @@unique([projectId, userId])
+}
+
+model Task {
+  id          Int             @id @default(autoincrement())
+  projectId   Int
+  project     Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  status      String          @default("TODO") // "BACKLOG", "TODO", "IN_PROGRESS", "REVIEW", "COMPLETED"
+  priority    String          @default("MEDIUM") // "LOW", "MEDIUM", "HIGH", "URGENT"
+  category    String          @default("Operations") // "Venue & Staging", "Catering & Hospitality", "AV & Tech", "Marketing & PR", "Speakers & VIP", "Finance & Legal", "Operations"
+  dueDate     DateTime?
+  orderIndex  Int             @default(0)
+  assigneeId  Int?
+  assignee    User?           @relation("AssignedTasks", fields: [assigneeId], references: [id], onDelete: SetNull)
+  creatorId   Int
+  creator     User            @relation("CreatedTasks", fields: [creatorId], references: [id], onDelete: Cascade)
+  checklist   ChecklistItem[]
+  comments    Comment[]
+  activities  Activity[]
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+}
+
+model ChecklistItem {
+  id          Int      @id @default(autoincrement())
+  taskId      Int
+  task        Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  title       String
+  isCompleted Boolean  @default(false)
+  orderIndex  Int      @default(0)
+  createdAt   DateTime @default(now())
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  taskId    Int
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Activity {
+  id        Int      @id @default(autoincrement())
+  projectId Int
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  taskId    Int?
+  task      Task?    @relation(fields: [taskId], references: [id], onDelete: SetNull)
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  action    String
+  details   String
+  createdAt DateTime @default(now())
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  message   String
+  type      String   @default("INFO") // "TASK_ASSIGNED", "STATUS_CHANGED", "COMMENT_ADDED", "DEADLINE_ALERT"
+  link      String?
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}

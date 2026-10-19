@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: fayaz_store_db
+    restart: always
+    environment:
+      POSTGRES_USER: fayaz_user
+      POSTGRES_PASSWORD: fayaz_password
+      POSTGRES_DB: fayaz_ecommerce_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
